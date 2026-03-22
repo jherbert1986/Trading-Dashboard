@@ -39,7 +39,8 @@
   .grid {
     display: grid;
     grid-template-columns:
-      repeat(auto-fit, minmax(200px, 1fr));
+      repeat(auto-fit,
+      minmax(200px, 1fr));
     gap: 12px;
     padding: 16px;
   }
@@ -123,7 +124,8 @@
   .macro-grid {
     display: grid;
     grid-template-columns:
-      repeat(auto-fit, minmax(140px, 1fr));
+      repeat(auto-fit,
+      minmax(140px, 1fr));
     gap: 10px;
     margin-bottom: 16px;
   }
@@ -176,7 +178,7 @@
     font-size: 11px;
     color: #546e7a;
     text-align: right;
-    padding: 8px 16px;
+    padding: 8px 16px 16px;
   }
   @media (max-width: 600px) {
     .grid {
@@ -195,8 +197,8 @@
     </span>
   </h1>
   <div class="subtitle">
-    March 21, 2026 10:21 PM &nbsp;|&nbsp;
-    40 commits &nbsp;|&nbsp;
+    March 21, 2026 10:34 PM &nbsp;|&nbsp;
+    41 commits &nbsp;|&nbsp;
     12 signal sources &nbsp;|&nbsp;
     jherbert1986.github.io/Trading-Dashboard
   </div>
@@ -206,7 +208,9 @@
 <div class="grid">
   <div class="card">
     <h3>Options at Risk</h3>
-    <div class="value">$8,652</div>
+    <div class="value">
+      $8,652
+    </div>
     <div class="sub">
       3 open positions
     </div>
@@ -218,7 +222,7 @@
       +$0
     </div>
     <div class="sub">
-      Stock proxy (3.5× leverage est.)
+      Stock proxy (3.5x leverage est.)
     </div>
   </div>
   <div class="card">
@@ -240,21 +244,12 @@
   </div>
   <div class="card">
     <h3>WTI Crude Oil</h3>
-    <div class="value">
+    <div class="value"
+     style="color:#ff9800">
       $93.39
     </div>
     <div class="sub">
-      FRED — energy thesis confirmed
-    </div>
-  </div>
-  <div class="card">
-    <h3>VIX / Fear Index</h3>
-    <div class="value"
-     style="color:#ff9800">
-      ~26.8
-    </div>
-    <div class="sub">
-      Elevated — use spreads
+      Energy thesis confirmed
     </div>
   </div>
   <div class="card">
@@ -265,6 +260,15 @@
     <div class="sub">
       10yr-2yr curve:
       +0.51%
+    </div>
+  </div>
+  <div class="card">
+    <h3>Unemployment</h3>
+    <div class="value">
+      4.4%
+    </div>
+    <div class="sub">
+      10yr Treasury: 4.25%
     </div>
   </div>
 </div>
@@ -288,26 +292,53 @@
     </div>
     <div class="macro-item">
       <div class="label">
-        10yr-2yr Spread
+        Yield Curve
       </div>
       <div class="val"
        style="color:#00c853">
         +0.51
       </div>
-      <div class="unit">% (yield curve)</div>
+      <div class="unit">
+        10yr-2yr spread
+      </div>
     </div>
     <div class="macro-item">
-      <div class="label">Unemployment</div>
-      <div class="val">4.4</div>
+      <div class="label">
+        Unemployment
+      </div>
+      <div class="val">
+        4.4
+      </div>
       <div class="unit">% rate</div>
+    </div>
+    <div class="macro-item">
+      <div class="label">
+        10yr Treasury
+      </div>
+      <div class="val">
+        4.25
+      </div>
+      <div class="unit">% yield</div>
+    </div>
+    <div class="macro-item">
+      <div class="label">VIX</div>
+      <div class="val"
+       style="color:#ff9800">
+        ~26.8
+      </div>
+      <div class="unit">
+        Elevated — use spreads
+      </div>
     </div>
   </div>
 </div>
 
 <!-- ACTIVE CONVERGENCE SIGNALS -->
 <div class="section">
-  <h2>⚡ Active Convergence Signals
-      (Last 7 Days)</h2>
+  <h2>
+    ⚡ Active Convergence Signals
+    (Last 7 Days)
+  </h2>
   <table>
     <thead>
       <tr>
@@ -448,7 +479,7 @@
   <td>$200/$210</td>
   <td>2026-05-01</td>
   <td>$3.80
-      ×5</td>
+      x5</td>
   <td>$1,900</td>
   <td>$3,100</td>
   <td>$198.16
@@ -471,7 +502,7 @@
   <td>$200/$210</td>
   <td>2026-05-01</td>
   <td>$4.73
-      ×7</td>
+      x7</td>
   <td>$3,308</td>
   <td>$3,692</td>
   <td>$201.73
@@ -494,7 +525,7 @@
   <td>$160/$168</td>
   <td>2026-05-01</td>
   <td>$3.44
-      ×10</td>
+      x10</td>
   <td>$3,445</td>
   <td>$4,055</td>
   <td>$159.67
@@ -511,7 +542,9 @@
 
 <!-- GEOPOLITICAL HOTSPOTS -->
 <div class="section">
-  <h2>🌍 Geopolitical Hotspots (GDELT)</h2>
+  <h2>
+    🌍 Geopolitical Hotspots (GDELT)
+  </h2>
   <table>
     <thead>
       <tr>
@@ -537,7 +570,7 @@
      style="background:#ff1744">
     ESCALATION
   </span></td>
-  <td>20260320</td>
+  <td>2026-03-20</td>
 </tr>
 <tr>
   <td>🇮🇱 Israel</td>
@@ -551,7 +584,7 @@
      style="background:#ff1744">
     ESCALATION
   </span></td>
-  <td>20260320</td>
+  <td>2026-03-20</td>
 </tr>
 <tr>
   <td>🇷🇺 Russia</td>
@@ -565,7 +598,7 @@
      style="background:#ff1744">
     ESCALATION
   </span></td>
-  <td>20260320</td>
+  <td>2026-03-20</td>
 </tr>
 <tr>
   <td>🇨🇳 China</td>
@@ -579,7 +612,7 @@
      style="background:#ff9800">
     ESCALATION
   </span></td>
-  <td>20260320</td>
+  <td>2026-03-20</td>
 </tr>
 <tr>
   <td>🇺🇦 Ukraine</td>
@@ -593,7 +626,7 @@
      style="background:#ff1744">
     ESCALATION
   </span></td>
-  <td>20260320</td>
+  <td>2026-03-20</td>
 </tr>
 <tr>
   <td>🇮🇶 Iraq</td>
@@ -607,7 +640,7 @@
      style="background:#ff1744">
     ESCALATION
   </span></td>
-  <td>20260320</td>
+  <td>2026-03-20</td>
 </tr>
 <tr>
   <td>🇻🇪 Venezuela</td>
@@ -621,7 +654,7 @@
      style="background:#ff1744">
     ESCALATION
   </span></td>
-  <td>20260320</td>
+  <td>2026-03-20</td>
 </tr>
     </tbody>
   </table>
@@ -629,7 +662,9 @@
 
 <!-- SIGNAL REGISTRY -->
 <div class="section">
-  <h2>📡 Signal Registry (Last 7 Days)</h2>
+  <h2>
+    📡 Signal Registry (Last 7 Days)
+  </h2>
   <table>
     <thead>
       <tr>
@@ -665,10 +700,10 @@
 </div>
 
 <div class="updated">
-  Last updated: March 21, 2026 10:21 PM &nbsp;|&nbsp;
+  Last updated: March 21, 2026 10:34 PM &nbsp;|&nbsp;
   Next update: daily 8:30am &nbsp;|&nbsp;
-  Data: yfinance, FRED, GDELT,
-  Polymarket, Congressional disclosures
+  Sources: yfinance · FRED · GDELT ·
+  Polymarket · Congressional disclosures
 </div>
 
 </body>
