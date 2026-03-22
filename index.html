@@ -3,1422 +3,687 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-    content="width=device-width,
-             initial-scale=1.0">
-<title>Trading Signal Dashboard</title>
+  content="width=device-width,
+  initial-scale=1.0">
+<title>Trading Signal System</title>
 <style>
   * { box-sizing: border-box;
        margin: 0; padding: 0; }
-
   body {
-    background: #0a0e1a;
-    color: #e0e6f0;
     font-family: -apple-system,
       BlinkMacSystemFont, 'Segoe UI',
       sans-serif;
-    font-size: 14px;
-    padding: 16px;
+    background: #0a0a0f;
+    color: #e0e0e0;
+    font-size: 13px;
+    line-height: 1.4;
   }
-
-  h1 {
+  .header {
+    background: linear-gradient(
+      135deg, #0d1b2a, #1a237e
+    );
+    padding: 20px 24px;
+    border-bottom: 1px solid #1e3a5f;
+  }
+  .header h1 {
     font-size: 20px;
     font-weight: 700;
     color: #fff;
-    margin-bottom: 4px;
-  }
-
-  .subtitle {
-    color: #888;
-    font-size: 12px;
-    margin-bottom: 20px;
-  }
-
-  .cards {
-    display: grid;
-    grid-template-columns:
-      repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-
-  .card {
-    background: #141828;
-    border: 1px solid #1e2540;
-    border-radius: 10px;
-    padding: 16px;
-    text-align: center;
-  }
-
-  .card-value {
-    font-size: 28px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .card-label {
-    font-size: 11px;
-    color: #888;
-    text-transform: uppercase;
     letter-spacing: 0.5px;
   }
-
-  .card.green .card-value {
-    color: #00d4aa;
+  .header .subtitle {
+    color: #90caf9;
+    font-size: 12px;
+    margin-top: 4px;
   }
-
-  .card.gold .card-value {
-    color: #ffd700;
+  .grid {
+    display: grid;
+    grid-template-columns:
+      repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    padding: 16px;
   }
-
-  .card.orange .card-value {
-    color: #ff6b35;
-  }
-
-  h2 {
-    font-size: 15px;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #1e2540;
-  }
-
-  .section {
-    margin-bottom: 28px;
-  }
-
-  .table-wrap {
-    overflow-x: auto;
+  .card {
+    background: #0f1923;
+    border: 1px solid #1e3a5f;
     border-radius: 8px;
-    border: 1px solid #1e2540;
+    padding: 16px;
   }
-
+  .card h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64b5f6;
+    margin-bottom: 8px;
+  }
+  .card .value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .card .sub {
+    font-size: 11px;
+    color: #90a4ae;
+    margin-top: 4px;
+  }
+  .section {
+    padding: 0 16px 16px;
+  }
+  .section h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64b5f6;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #1e3a5f;
+  }
   table {
     width: 100%;
     border-collapse: collapse;
-    background: #141828;
+    font-size: 12px;
   }
-
   th {
-    background: #0d1120;
-    color: #888;
-    font-size: 11px;
+    text-align: left;
+    padding: 8px 10px;
+    background: #0d1b2a;
+    color: #90caf9;
     font-weight: 600;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    padding: 10px 12px;
-    text-align: left;
-    white-space: nowrap;
+    border-bottom: 1px solid #1e3a5f;
   }
-
   td {
-    padding: 10px 12px;
-    border-top: 1px solid #1a2035;
+    padding: 8px 10px;
+    border-bottom: 1px solid #0f1923;
     vertical-align: middle;
   }
-
   tr:hover td {
-    background: #1a2035;
+    background: #0d1b2a;
   }
-
-  .ticker {
-    font-weight: 700;
-    color: #fff;
-    font-size: 15px;
-  }
-
-  .thesis {
-    color: #888;
-    font-size: 12px;
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .badge {
+  .tier-badge {
     display: inline-block;
     padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    background: #1e3a5f;
+    color: #90caf9;
+    margin: 1px;
+  }
+  .macro-grid {
+    display: grid;
+    grid-template-columns:
+      repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .macro-item {
+    background: #0d1b2a;
+    border: 1px solid #1e3a5f;
+    border-radius: 6px;
+    padding: 12px;
+    text-align: center;
+  }
+  .macro-item .label {
+    font-size: 10px;
+    color: #90a4ae;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .macro-item .val {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .macro-item .unit {
+    font-size: 10px;
+    color: #64b5f6;
+  }
+  .prog-bar {
+    height: 6px;
+    background: #1e3a5f;
+    border-radius: 3px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+  .prog-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+  .mode-badge {
+    display: inline-block;
+    background: #1b5e20;
+    color: #a5d6a7;
+    padding: 3px 10px;
     border-radius: 4px;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
+    margin-left: 10px;
   }
-
-  .mode-badge {
-    background: #1a2540;
-    color: #6b8cff;
-    padding: 4px 10px;
-    border-radius: 6px;
+  .updated {
     font-size: 11px;
-    font-weight: 600;
-    display: inline-block;
-    margin-bottom: 20px;
+    color: #546e7a;
+    text-align: right;
+    padding: 8px 16px;
   }
-
   @media (max-width: 600px) {
-    body { padding: 12px; }
-    .card-value { font-size: 22px; }
-    .thesis { display: none; }
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 </style>
 </head>
 <body>
 
-<h1>📊 Trading Signal Dashboard</h1>
-<div class="subtitle">
-    Updated March 20, 2026 11:00 PM &nbsp;|&nbsp;
-    Paper Trading Mode
-</div>
-<div class="mode-badge">
-    📄 PAPER TRADING — Not real money
-</div>
-
-<div class="cards">
-    <div class="card">
-        <div class="card-value">339</div>
-        <div class="card-label">
-            Total Signals
-        </div>
-    </div>
-    <div class="card orange">
-        <div class="card-value">
-            297
-        </div>
-        <div class="card-label">
-            Open Positions
-        </div>
-    </div>
-    <div class="card green">
-        <div class="card-value">
-            0%
-        </div>
-        <div class="card-label">
-            Win Rate
-        </div>
-    </div>
-    <div class="card gold">
-        <div class="card-value">
-            0
-        </div>
-        <div class="card-label">
-            Closed Trades
-        </div>
-    </div>
+<div class="header">
+  <h1>
+    📊 Trading Signal System
+    <span class="mode-badge">
+      📄 PAPER TRADING
+    </span>
+  </h1>
+  <div class="subtitle">
+    March 21, 2026 09:51 PM &nbsp;|&nbsp;
+    40 commits &nbsp;|&nbsp;
+    12 signal sources &nbsp;|&nbsp;
+    jherbert1986.github.io/Trading-Dashboard
+  </div>
 </div>
 
+<!-- KPI CARDS -->
+<div class="grid">
+  <div class="card">
+    <h3>Options at Risk</h3>
+    <div class="value">$8,652</div>
+    <div class="sub">
+      3 open positions
+    </div>
+  </div>
+  <div class="card">
+    <h3>Estimated P&L</h3>
+    <div class="value"
+     style="color:#00c853">
+      +$0
+    </div>
+    <div class="sub">
+      Stock proxy (3.5× leverage est.)
+    </div>
+  </div>
+  <div class="card">
+    <h3>Graduation Progress</h3>
+    <div class="value">
+      0/30
+    </div>
+    <div class="sub">
+      Win rate:
+      0.0%
+      (target 55%)
+    </div>
+    <div class="prog-bar">
+      <div class="prog-fill"
+       style="width:0%;
+              background:#2196f3">
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>WTI Crude Oil</h3>
+    <div class="value">
+      $93.39
+    </div>
+    <div class="sub">
+      FRED — energy thesis confirmed
+    </div>
+  </div>
+  <div class="card">
+    <h3>VIX / Fear Index</h3>
+    <div class="value"
+     style="color:#ff9800">
+      ~26.8
+    </div>
+    <div class="sub">
+      Elevated — use spreads
+    </div>
+  </div>
+  <div class="card">
+    <h3>Fed Funds Rate</h3>
+    <div class="value">
+      0.00%
+    </div>
+    <div class="sub">
+      10yr-2yr curve:
+      +0.00%
+    </div>
+  </div>
+</div>
+
+<!-- MACRO ENVIRONMENT -->
 <div class="section">
-    <h2>🟢 Open Positions
-        (297)</h2>
-    <div class="table-wrap">
-    <table>
-        <thead>
-        <tr>
-            <th>Ticker</th>
-            <th>Signal</th>
-            <th>Score</th>
-            <th>Direction</th>
-            <th>Entry</th>
-            <th>Current</th>
-            <th>P&amp;L</th>
-            <th>Days</th>
-            <th>Thesis</th>
-        </tr>
-        </thead>
-        <tbody>
-        
-        <tr>
-            <td class="ticker">XOM</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                99
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$159.67</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Convergence: 3 signals, 2 categories, score 99</td>
-        </tr>
-        <tr>
-            <td class="ticker">CVX</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                99
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$201.73</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Convergence: 3 signals, 2 categories, score 99</td>
-        </tr>
-        <tr>
-            <td class="ticker">COP</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                99
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$126.92</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Convergence: 2 signals, 1 categories, score 99</td>
-        </tr>
-        <tr>
-            <td class="ticker">UNH</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$275.59</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY UNH $75K</td>
-        </tr>
-        <tr>
-            <td class="ticker">MSFT</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$381.87</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">John Boozman BUY MSFT $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">UNH</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$275.59</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY UNH $75K</td>
-        </tr>
-        <tr>
-            <td class="ticker">MSFT</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$381.87</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">John Boozman BUY MSFT $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">MSFT</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$381.87</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY MSFT $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">XOM</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$159.67</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY XOM $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">ICE</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$158.43</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY ICE $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">GOOGL</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$301.00</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Cleo Fields [Member] BUY GOOGL $175K</td>
-        </tr>
-        <tr>
-            <td class="ticker">MSFT</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$381.87</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY MSFT $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">XOM</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$159.67</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY XOM $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">MSFT</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$381.87</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Cleo Fields [Member] BUY MSFT $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">GOOGL</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$301.00</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Cleo Fields [Member] BUY GOOGL $175K</td>
-        </tr>
-        <tr>
-            <td class="ticker">NOW</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$110.38</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Byron Donalds [Spouse] BUY NOW $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">MSFT</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$381.87</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY MSFT $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">MSFT</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$381.87</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Cleo Fields [Self] BUY MSFT $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">GOOGL</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$301.00</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Cleo Fields [Self] BUY GOOGL $175K</td>
-        </tr>
-        <tr>
-            <td class="ticker">NOW</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                85
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$110.38</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Byron Donalds [Spouse] BUY NOW $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">RTX</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                84
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$198.16</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Convergence: 2 signals, 2 categories, score 84</td>
-        </tr>
-        <tr>
-            <td class="ticker">GD</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                84
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$345.78</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Convergence: 2 signals, 2 categories, score 84</td>
-        </tr>
-        <tr>
-            <td class="ticker">BBAI</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                84
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$3.58</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Lisa McClain [Spouse] BUY BBAI $32K</td>
-        </tr>
-        <tr>
-            <td class="ticker">TTD</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                84
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$24.11</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Byron Donalds [Member] BUY TTD $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">XOM</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                84
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$159.67</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY XOM $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">TTD</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                84
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$24.11</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Byron Donalds [Self] BUY TTD $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">MSFT</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                81
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$381.87</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Convergence: 6 signals, 1 categories, score 81</td>
-        </tr>
-        <tr>
-            <td class="ticker">V</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                80
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$301.62</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY V $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">INTU</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                80
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$455.56</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY INTU $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">GEV</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                80
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$851.07</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY GEV $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">UBER</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                80
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$73.89</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY UBER $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">ICE</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ff6b35;
-                font-weight:600">
-                80
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$158.43</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Josh Gottheimer [Joint] BUY ICE $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">TSM</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                79
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$329.24</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Richard W. Allen [Spouse] BUY TSM $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">TSM</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                79
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$329.24</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Richard W. Allen [Spouse] BUY TSM $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">JPM</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                78
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$286.56</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Jonathan Jackson [Spouse] BUY JPM $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">JPM</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                78
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$286.56</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Jonathan Jackson [Spouse] BUY JPM $8K</td>
-        </tr>
-        <tr>
-            <td class="ticker">XOM</td>
-            <td>POLYMARKET</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                77
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$159.67</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Oil Price Spike: Will Crude Oil (CL) hit (HIGH) $100 by end </td>
-        </tr>
-        <tr>
-            <td class="ticker">ITA</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                75
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$222.56</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Scott H. Peters [Spouse] BUY ? $375K</td>
-        </tr>
-        <tr>
-            <td class="ticker">ITA</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                75
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$222.56</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Scott H. Peters [Spouse] BUY None $375K</td>
-        </tr>
-        <tr>
-            <td class="ticker">ITA</td>
-            <td>CONGRESSIONAL BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                75
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$222.56</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>0d</td>
-            <td class="thesis">Scott H. Peters [Spouse] BUY None $375K</td>
-        </tr>
-        <tr>
-            <td class="ticker">ADBE</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                73
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$248.15</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY ADBE $32K</td>
-        </tr>
-        <tr>
-            <td class="ticker">AMKR</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                73
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$45.81</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY AMKR $32K</td>
-        </tr>
-        <tr>
-            <td class="ticker">APG</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                73
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$39.50</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY APG $32K</td>
-        </tr>
-        <tr>
-            <td class="ticker">C</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                73
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$109.52</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY C $32K</td>
-        </tr>
-        <tr>
-            <td class="ticker">CRS</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                73
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$362.40</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY CRS $32K</td>
-        </tr>
-        <tr>
-            <td class="ticker">FCFS</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                73
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$192.08</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY FCFS $32K</td>
-        </tr>
-        <tr>
-            <td class="ticker">LRN</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                73
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$85.06</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY LRN $32K</td>
-        </tr>
-        <tr>
-            <td class="ticker">MCK</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                73
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$885.84</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY MCK $32K</td>
-        </tr>
-        <tr>
-            <td class="ticker">MPWR</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                73
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$1068.85</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY MPWR $32K</td>
-        </tr>
-        <tr>
-            <td class="ticker">VSEC</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700;
-                font-weight:600">
-                73
-            </td>
-            <td style="color:#00d4aa">
-                ▲ BULLISH
-            </td>
-            <td>N/A</td>
-            <td>$177.33</td>
-            <td><span style="color:#888">N/A</span></td>
-            <td>-1d</td>
-            <td class="thesis">Markwayne Mullin BUY VSEC $32K</td>
-        </tr>
-        </tbody>
-    </table>
+  <h2>📈 Macro Environment (FRED)</h2>
+  <div class="macro-grid">
+    <div class="macro-item">
+      <div class="label">Fed Funds</div>
+      <div class="val">0.00</div>
+      <div class="unit">% rate</div>
     </div>
+    <div class="macro-item">
+      <div class="label">WTI Crude</div>
+      <div class="val"
+       style="color:#ff9800">
+        $93.39
+      </div>
+      <div class="unit">$/barrel</div>
+    </div>
+    <div class="macro-item">
+      <div class="label">
+        10yr-2yr Spread
+      </div>
+      <div class="val"
+       style="color:#ff1744">
+        +0.00
+      </div>
+      <div class="unit">% (yield curve)</div>
+    </div>
+    <div class="macro-item">
+      <div class="label">Unemployment</div>
+      <div class="val">0.0</div>
+      <div class="unit">% rate</div>
+    </div>
+  </div>
 </div>
 
+<!-- ACTIVE CONVERGENCE SIGNALS -->
 <div class="section">
-    <h2>📈 Signal Performance</h2>
-    <div class="table-wrap">
-    <table>
-        <thead>
-        <tr>
-            <th>Signal Type</th>
-            <th>Total</th>
-            <th>Open</th>
-            <th>Wins</th>
-            <th>Losses</th>
-            <th>Win Rate</th>
-        </tr>
-        </thead>
-        <tbody>
-        
-        <tr>
-            <td>CONGRESSIONAL BUY</td>
-            <td>143</td>
-            <td>143</td>
-            <td>0</td>
-            <td>0</td>
-            <td style="color:#888;
-                font-weight:600">
-                —
-            </td>
-        </tr>
-        <tr>
-            <td>SAM GOV JA FILING</td>
-            <td>101</td>
-            <td>101</td>
-            <td>0</td>
-            <td>0</td>
-            <td style="color:#888;
-                font-weight:600">
-                —
-            </td>
-        </tr>
-        <tr>
-            <td>SENATE BUY</td>
-            <td>68</td>
-            <td>68</td>
-            <td>0</td>
-            <td>0</td>
-            <td style="color:#888;
-                font-weight:600">
-                —
-            </td>
-        </tr>
-        <tr>
-            <td>SAM GOV HIGH INTEREST</td>
-            <td>14</td>
-            <td>14</td>
-            <td>0</td>
-            <td>0</td>
-            <td style="color:#888;
-                font-weight:600">
-                —
-            </td>
-        </tr>
-        <tr>
-            <td>CONVERGENCE BULLISH</td>
-            <td>6</td>
-            <td>6</td>
-            <td>0</td>
-            <td>0</td>
-            <td style="color:#888;
-                font-weight:600">
-                —
-            </td>
-        </tr>
-        <tr>
-            <td>USA SPENDING TRANSACTION</td>
-            <td>3</td>
-            <td>3</td>
-            <td>0</td>
-            <td>0</td>
-            <td style="color:#888;
-                font-weight:600">
-                —
-            </td>
-        </tr>
-        <tr>
-            <td>POLYMARKET</td>
-            <td>2</td>
-            <td>2</td>
-            <td>0</td>
-            <td>0</td>
-            <td style="color:#888;
-                font-weight:600">
-                —
-            </td>
-        </tr>
-        <tr>
-            <td>INSIDER CLUSTER SELL</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0</td>
-            <td>0</td>
-            <td style="color:#888;
-                font-weight:600">
-                —
-            </td>
-        </tr>
-        <tr>
-            <td>INSIDER CEO BUY</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0</td>
-            <td>0</td>
-            <td style="color:#888;
-                font-weight:600">
-                —
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    </div>
+  <h2>⚡ Active Convergence Signals
+      (Last 7 Days)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Tier</th>
+        <th>Ticker</th>
+        <th>Score</th>
+        <th>Depth</th>
+        <th>Categories</th>
+        <th>Direction</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+<tr>
+  <td>
+    <span class="tier-badge"
+     style="background:#ff6f00">
+      🔥 ELITE
+    </span>
+  </td>
+  <td><b>XOM</b></td>
+  <td>99/99</td>
+  <td>5 sigs /
+      3 cats</td>
+  <td><span class="badge">congressional_i</span><span class="badge">macro_economic</span><span class="badge">geopolitical_ev</span></td>
+  <td>BULLISH</td>
+  <td>2026-03-22</td>
+</tr>
+<tr>
+  <td>
+    <span class="tier-badge"
+     style="background:#1565c0">
+      ⚡ STRONG
+    </span>
+  </td>
+  <td><b>OXY</b></td>
+  <td>99/99</td>
+  <td>2 sigs /
+      2 cats</td>
+  <td><span class="badge">macro_economic</span><span class="badge">geopolitical_ev</span></td>
+  <td>BULLISH</td>
+  <td>2026-03-21</td>
+</tr>
+<tr>
+  <td>
+    <span class="tier-badge"
+     style="background:#555">
+      📋 WATCH
+    </span>
+  </td>
+  <td><b>CVX</b></td>
+  <td>99/99</td>
+  <td>3 sigs /
+      2 cats</td>
+  <td><span class="badge">geopolitical_ev</span><span class="badge">congressional_i</span></td>
+  <td>BULLISH</td>
+  <td>2026-03-21</td>
+</tr>
+<tr>
+  <td>
+    <span class="tier-badge"
+     style="background:#555">
+      📋 WATCH
+    </span>
+  </td>
+  <td><b>COP</b></td>
+  <td>99/99</td>
+  <td>2 sigs /
+      1 cats</td>
+  <td><span class="badge">geopolitical_ev</span></td>
+  <td>BULLISH</td>
+  <td>2026-03-21</td>
+</tr>
+<tr>
+  <td>
+    <span class="tier-badge"
+     style="background:#555">
+      📋 WATCH
+    </span>
+  </td>
+  <td><b>RTX</b></td>
+  <td>84/99</td>
+  <td>2 sigs /
+      2 cats</td>
+  <td><span class="badge">government_cont</span><span class="badge">geopolitical_ev</span></td>
+  <td>BULLISH</td>
+  <td>2026-03-21</td>
+</tr>
+<tr>
+  <td>
+    <span class="tier-badge"
+     style="background:#555">
+      📋 WATCH
+    </span>
+  </td>
+  <td><b>GD</b></td>
+  <td>84/99</td>
+  <td>2 sigs /
+      2 cats</td>
+  <td><span class="badge">government_cont</span><span class="badge">geopolitical_ev</span></td>
+  <td>BULLISH</td>
+  <td>2026-03-21</td>
+</tr>
+<tr>
+  <td>
+    <span class="tier-badge"
+     style="background:#555">
+      📋 WATCH
+    </span>
+  </td>
+  <td><b>MSFT</b></td>
+  <td>81/99</td>
+  <td>6 sigs /
+      1 cats</td>
+  <td><span class="badge">congressional_i</span></td>
+  <td>BULLISH</td>
+  <td>2026-03-21</td>
+</tr>
+    </tbody>
+  </table>
 </div>
 
+<!-- OPTIONS PAPER TRADES -->
 <div class="section">
-    <h2>🔔 Recent Alerts</h2>
-    <div class="table-wrap">
-    <table>
-        <thead>
-        <tr>
-            <th>Ticker</th>
-            <th>Signal</th>
-            <th>Score</th>
-            <th>Direction</th>
-            <th>Date</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        
-        <tr>
-            <td class="ticker">XOM</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35">
-                99
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-21</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">RTX</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35">
-                84
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-21</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">MSFT</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35">
-                81
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-21</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">GD</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35">
-                84
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-21</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">CVX</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35">
-                99
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-21</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">COP</td>
-            <td>CONVERGENCE BULLISH</td>
-            <td style="color:#ff6b35">
-                99
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-21</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">LMT</td>
-            <td>POLYMARKET</td>
-            <td style="color:#ffd700">
-                64
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-21</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">XOM</td>
-            <td>POLYMARKET</td>
-            <td style="color:#ffd700">
-                77
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-21</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">UNH</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ff6b35">
-                85
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">ADBE</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">AMKR</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">APG</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">C</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">CRS</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">FCFS</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">LRN</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">MCK</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">MPWR</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">VSEC</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        <tr>
-            <td class="ticker">XTWO</td>
-            <td>SENATE BUY</td>
-            <td style="color:#ffd700">
-                73
-            </td>
-            <td>BULLISH</td>
-            <td>2026-03-20</td>
-            <td style="color:#888">
-                OPEN
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    </div>
+  <h2>🎯 Options Paper Trades</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Tier</th>
+        <th>Ticker</th>
+        <th>Structure</th>
+        <th>Strikes</th>
+        <th>Expiration</th>
+        <th>Position</th>
+        <th>Risk</th>
+        <th>Max Profit</th>
+        <th>Current / BE</th>
+        <th>Est. P&L</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+<tr>
+  <td>
+    <span class="tier-badge"
+     style="background:#1565c0">
+      ⚡ STRONG
+    </span>
+  </td>
+  <td><b>RTX</b></td>
+  <td>CALL_SPREAD</td>
+  <td>$200/$210</td>
+  <td>2026-05-01</td>
+  <td>$3.80
+      ×5</td>
+  <td>$1,900</td>
+  <td>$3,100</td>
+  <td>$198.16
+      (-2.8% to BE)</td>
+  <td style="color:#00c853;
+             font-weight:bold">
+    +0.0%
+    ($+0)
+  </td>
+</tr>
+<tr>
+  <td>
+    <span class="tier-badge"
+     style="background:#ff6f00">
+      🔥 ELITE
+    </span>
+  </td>
+  <td><b>CVX</b></td>
+  <td>CALL_SPREAD</td>
+  <td>$200/$210</td>
+  <td>2026-05-01</td>
+  <td>$4.73
+      ×7</td>
+  <td>$3,308</td>
+  <td>$3,692</td>
+  <td>$201.73
+      (-1.5% to BE)</td>
+  <td style="color:#00c853;
+             font-weight:bold">
+    +0.0%
+    ($+0)
+  </td>
+</tr>
+<tr>
+  <td>
+    <span class="tier-badge"
+     style="background:#ff6f00">
+      🔥 ELITE
+    </span>
+  </td>
+  <td><b>XOM</b></td>
+  <td>CALL_SPREAD</td>
+  <td>$160/$168</td>
+  <td>2026-05-01</td>
+  <td>$3.44
+      ×10</td>
+  <td>$3,445</td>
+  <td>$4,055</td>
+  <td>$159.67
+      (-2.3% to BE)</td>
+  <td style="color:#00c853;
+             font-weight:bold">
+    +0.0%
+    ($+0)
+  </td>
+</tr>
+    </tbody>
+  </table>
 </div>
 
-<div style="color:#444;font-size:11px;
-     text-align:center;margin-top:20px">
-    Trading Signal System &nbsp;|&nbsp;
-    Paper Trading Only &nbsp;|&nbsp;
-    Not Financial Advice
+<!-- GEOPOLITICAL HOTSPOTS -->
+<div class="section">
+  <h2>🌍 Geopolitical Hotspots (GDELT)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Conflict Events</th>
+        <th>Avg Goldstein</th>
+        <th>Media Mentions</th>
+        <th>Signal</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+<tr>
+  <td>🇮🇷 Iran</td>
+  <td>3,796</td>
+  <td style="color:#ff1744;
+             font-weight:bold">
+    -7.88
+  </td>
+  <td>49,468</td>
+  <td><span class="badge"
+     style="background:#ff1744">
+    ESCALATION
+  </span></td>
+  <td>20260320</td>
+</tr>
+<tr>
+  <td>🇮🇱 Israel</td>
+  <td>2,645</td>
+  <td style="color:#ff1744;
+             font-weight:bold">
+    -8.08
+  </td>
+  <td>21,700</td>
+  <td><span class="badge"
+     style="background:#ff1744">
+    ESCALATION
+  </span></td>
+  <td>20260320</td>
+</tr>
+<tr>
+  <td>🇷🇺 Russia</td>
+  <td>554</td>
+  <td style="color:#ff1744;
+             font-weight:bold">
+    -7.03
+  </td>
+  <td>4,579</td>
+  <td><span class="badge"
+     style="background:#ff1744">
+    ESCALATION
+  </span></td>
+  <td>20260320</td>
+</tr>
+<tr>
+  <td>🇨🇳 China</td>
+  <td>448</td>
+  <td style="color:#ff9800;
+             font-weight:bold">
+    -6.65
+  </td>
+  <td>2,710</td>
+  <td><span class="badge"
+     style="background:#ff9800">
+    ESCALATION
+  </span></td>
+  <td>20260320</td>
+</tr>
+<tr>
+  <td>🇺🇦 Ukraine</td>
+  <td>423</td>
+  <td style="color:#ff1744;
+             font-weight:bold">
+    -7.53
+  </td>
+  <td>3,855</td>
+  <td><span class="badge"
+     style="background:#ff1744">
+    ESCALATION
+  </span></td>
+  <td>20260320</td>
+</tr>
+<tr>
+  <td>🇮🇶 Iraq</td>
+  <td>222</td>
+  <td style="color:#ff1744;
+             font-weight:bold">
+    -8.18
+  </td>
+  <td>1,388</td>
+  <td><span class="badge"
+     style="background:#ff1744">
+    ESCALATION
+  </span></td>
+  <td>20260320</td>
+</tr>
+<tr>
+  <td>🇻🇪 Venezuela</td>
+  <td>91</td>
+  <td style="color:#ff1744;
+             font-weight:bold">
+    -7.02
+  </td>
+  <td>496</td>
+  <td><span class="badge"
+     style="background:#ff1744">
+    ESCALATION
+  </span></td>
+  <td>20260320</td>
+</tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SIGNAL REGISTRY -->
+<div class="section">
+  <h2>📡 Signal Registry (Last 7 Days)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Signals</th>
+        <th>Tickers</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+<tr>
+  <td>📊 Insider Buy</td>
+  <td><b>13</b></td>
+  <td>7</td>
+</tr>
+<tr>
+  <td>🌍 Geopolitical</td>
+  <td><b>12</b></td>
+  <td>9</td>
+</tr>
+<tr>
+  <td>📡 Gov Contract</td>
+  <td><b>10</b></td>
+  <td>8</td>
+</tr>
+<tr>
+  <td>📈 Macro/EIA/FRED</td>
+  <td><b>9</b></td>
+  <td>5</td>
+</tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="updated">
+  Last updated: March 21, 2026 09:51 PM &nbsp;|&nbsp;
+  Next update: daily 8:30am &nbsp;|&nbsp;
+  Data: yfinance, FRED, GDELT,
+  Polymarket, Congressional disclosures
 </div>
 
 </body>
